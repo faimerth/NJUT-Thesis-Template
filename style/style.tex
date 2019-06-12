@@ -1,0 +1,447 @@
+\usepackage{bophook}
+\usepackage{calc}
+\usepackage{tabularx}
+\usepackage{supertabular}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage[table]{xcolor}
+\usepackage{hhline}
+\usepackage{wrapfig}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{upgreek}
+\usepackage{luatexja}
+\usepackage{luatexja-fontspec}
+\setmainfont{Times New Roman}
+\newfontfamily\Times{Times New Roman}
+\setmainjfont{FandolSong}
+\newjfontfamily\simhei{FandolHei}
+\newjfontfamily\simsun{FandolSong}
+\newjfontfamily\simkai{FandolKai}
+\newjfontfamily\simfang{FandolFang}
+
+\usepackage{titletoc}
+\usepackage{geometry}
+\usepackage[normalem]{ulem}
+
+\newcommand{\tsp}{\textsuperscript}
+\newcommand{\tsb}{\textsubscript}
+\newcommand{\bslash}{\textbackslash}
+\newcommand{\stilde}{\textasciitilde}
+\newcommand{\gqq}{\reflectbox{\textacutedbl}}
+\newcommand{\cqq}{\textacutedbl}
+\newcommand{\gq}{\textasciigrave}
+\newcommand{\cq}{\textasciiacute}
+%\newcommand{\xLongleftrightarrow}[1]{\Longleftarrow\hspace{-0.6pt}\text{\scalebox{#1}[1.0]{\hspace{-0.64pt}=\hspace{-0.64pt}}}\hspace{-0.6pt}\Longrightarrow}
+\newcommand{\xLongleftrightarrow}[2]{\substack{#2\\\text{\hbox{$\Leftarrow$\hspace{-0.1\fsize}\raisebox{-0.1800\fsize}{\scalebox{#1}[1.30]{\hspace{-0.032\fsize}=\hspace{-0.032\fsize}}}\hspace{-0.1\fsize}$\Rightarrow$}}}}
+\makeatletter
+\def\thickhline{%
+	\noalign{\ifnum0=`}\fi\hrule \@height \thickarrayrulewidth \futurelet
+	\reserved@a\@xthickhline}
+\def\@xthickhline{\ifx\reserved@a\thickhline
+	\vskip\doublerulesep
+	\vskip-\thickarrayrulewidth
+	\fi
+	\ifnum0=`{\fi}}
+\newlength{\thickarrayrulewidth}
+\setlength{\thickarrayrulewidth}{3\arrayrulewidth}
+\newcommand{\xRightarrow}[2][]{\ext@arrow 0359\Rightarrowfill@{#1}{#2}}
+\newcommand{\ulfrule}{\xleaders\hbox{\uline{ }}\hfill\kern0pt}
+\newcommand*\fsize{\dimexpr\f@size pt\relax}
+\newcommand{\tmp@one}{}
+\newcommand{\tmp@two}{}
+\newlength{\tmp@len@a}
+\newlength{\tmp@len@b}
+\newcounter{tmp@one}
+\newcounter{tmp@two}
+\newcounter{tmp@three}
+\newcounter{tmp@four}
+\newcounter{tmp@five}
+\newcounter{body}
+\directlua{
+	require("style/main.lua")
+}
+%\renewcommand{\addtocontents}[2]{%
+%	\begingroup \let \thepage \relax {\let \label \@gobble \let \index \@gobble \let \glossary \@gobble }\let \protect \@unexpandable@protect \edef \reserved@a {#2}\directlua{wrtie_toc("reserved@a")} \endgroup
+%	\protected@write \@auxout {\let \label \@gobble \let \index \@gobble \let \glossary \@gobble }{#2}%
+%	\@writefile {#1}{#2}%
+%}
+%\newcommand{\geometry}[1]{%
+%	\directlua{%
+%		setgeometry("#1")
+%	}%
+%}
+\newcommand{\linestretch}{1.0}
+\newcommand{\setlinestrech}[1]{%
+	\renewcommand{\linestretch}{#1}%
+}
+\newcommand{\fixlineskip}[1]{%
+	\begingroup%
+	\edef \indent@of {\directlua{line_indent_of()}}
+	\setbox0\vbox{{\indent@of}#1}%
+	\directlua{fix_lineskip(0)}%
+	\endgroup%
+}
+\newcommand{\setfsize}[1]{%
+	\setlength{\tmp@len@a}{#1}%
+	\fontsize{#1}{\directlua{calc_linestretch(tex.skip["tmp@len@a"].width)}}\selectfont{}%
+	\setlength{\parindent}{\widthof{一二}}%
+}
+\newcommand{\chsnum}[1]{\directlua{%
+	 chsnum(#1)
+}}
+\renewcommand{\title}[1]{%
+	\noindent\parbox{\linewidth}{\centering\noindent\fontsize{15pt}{\baselineskip}\selectfont\simsun{}#1}\par\vspace{0.35in}%
+}
+\renewenvironment{titlepage}[2]{%
+	\newgeometry{top=1in,bottom=1in,left=1.25in,right=1.25in}%
+	\begingroup\newpage\pagenumbering{gobble}%
+	\noindent\centerline{\includegraphics[width=160pt,keepaspectratio]{style/njtech.png}}\par%
+	\vspace{18pt}%
+	\begingroup%
+	\newcommand{\tmpA}{\fontsize{22pt}{\baselineskip}\selectfont{#1}}%
+	\newcommand{\tmpB}{\fontsize{20pt}{\baselineskip}\selectfont{#2}}%
+	\noindent\centerline{%
+		\begin{tikzpicture}
+		\draw (0pt,48.6pt) node[above]{\tmpB};
+		\draw (0pt,0pt) node[above]{\tmpA};
+		\draw (0pt,-2.54pt) node[above]{\rule{\widthof{\ \ \tmpA\ \ }}{1pt}};
+		\draw (0pt,-6.28pt) node[above]{\rule{\widthof{\ \ \tmpA\ \ }}{2.74pt}};
+		\end{tikzpicture}}\endgroup%
+	\vspace{53pt}\par%
+	\noindent\centerline{\includegraphics[width=80pt,keepaspectratio]{style/njtech2.png}}\par%
+	\vspace{72pt}%
+	\begingroup\fontsize{16pt}{\baselineskip}\selectfont\simhei%
+		\renewcommand{\ULthickness}{0.78pt}%
+		\setlength{\ULdepth}{2.15pt}%
+		\setlength{\lineskip}{11.34pt}%
+		\newcommand{\entry}[2]{%
+		\begingroup%
+		\centerline{\parbox[t]{0.9\linewidth}{%
+		\newcommand{\tmpA}{##1\ \ }%
+		\newcommand{\tmpB}{##2}%
+		\setlength{\tmp@len@a}{\linewidth-\widthof{\tmpA}}%
+		\setlength{\tmp@len@b}{\widthof{\tmpB}}%
+		\noindent\tmpA\parbox[t]{\tmp@len@a}{%
+			\setlength{\lineskip}{11.34pt}%
+			\noindent\ifdim\tmp@len@b>\tmp@len@a{\uline{##2\hfill}}\else{\ulfrule\uline{\tmpB}\ulfrule}\fi%
+		}}}\par\endgroup}%
+}{%
+	\endgroup\endgroup\par%
+	\vspace{70pt}%
+	\centerline{\fontsize{16pt}{\baselineskip}\selectfont{}\the\year{年}\the\month{月}}%
+	%\@dtm@year%
+	\newpage%
+}
+\newenvironment{titlepage2}[2]{%
+	\newgeometry{top=1.632in,bottom=1in,left=1.25in,right=1.25in}%
+	\begingroup\newpage\pagenumbering{gobble}%
+	\noindent\centerline{\includegraphics[width=203pt,keepaspectratio]{style/njtech.png}}\par%
+	\vspace{55pt}%
+	\begingroup%
+	\newcommand{\tmpA}{\fontsize{26pt}{\baselineskip}\selectfont\simhei{#1}}%
+	\noindent\centerline{%
+		\begin{tikzpicture}
+		\draw (0pt,0pt) node[above]{\tmpA};
+		\end{tikzpicture}}\endgroup%
+	\vspace{80pt}\par%
+	\begingroup\fontsize{16pt}{\baselineskip}\selectfont\simsun%
+	\renewcommand{\ULthickness}{0.78pt}%
+	\setlength{\ULdepth}{2.15pt}%
+	\setlength{\lineskip}{11.34pt}%
+	\newcommand{\entry}[2]{%
+		\begingroup%
+		\centerline{\parbox[t]{0.82\linewidth}{%
+				\newcommand{\tmpA}{##1\ \ }%
+				\newcommand{\tmpB}{##2}%
+				\setlength{\tmp@len@a}{\linewidth-\widthof{\tmpA}}%
+				\setlength{\tmp@len@b}{\widthof{\tmpB}}%
+				\noindent\tmpA\parbox[t]{\tmp@len@a}{%
+					\setlength{\lineskip}{16pt}%
+					\noindent\ifdim\tmp@len@b>\tmp@len@a{\uline{##2\hfill}}\else{\ulfrule\uline{\tmpB}\ulfrule}\fi%
+				}}}\par\endgroup}%
+	}{%
+	\endgroup\endgroup\par%
+	\vspace{99pt}%
+	\centerline{\fontsize{16pt}{\baselineskip}\selectfont{}\the\year{年}\the\month{月}}%
+	%\@dtm@year%
+	\newpage%
+}
+\renewenvironment{abstract}[4]{
+	\newpage%
+	\renewcommand{\tmp@one}{#3}%
+	\renewcommand{\tmp@two}{#4}%
+	\noindent\centerline{\noindent\fontsize{15pt}{\baselineskip}\selectfont\simsun{}#1}\par\vspace{0.35in}%
+	\phantomsection%
+	\newcommand{\ch@name}{#2}%
+	\directlua{register_section(nil,"\ch@name",nil,1,"\thepage")}%
+\centerline{\setfsize{15pt}#2}\vspace{0.21in}%
+%\centerline{\fontsize{15pt}{22pt}\selectfont{}#2}\vspace{0.21in}%
+\begingroup\setfsize{12pt}%
+%\setlength{\baselineskip}{1.5\fsize}%
+%\setlength{\parindent}{\widthof{一二}}%
+}{%
+\par\endgroup\par%
+\vspace{1.5\fsize}%
+\begingroup\setfsize{10.5pt}\textbf{\tmp@one}{\tmp@two}\par\endgroup\par%
+\newpage%
+}
+\newenvironment{abstractE}[4]{
+	\newpage%
+	\renewcommand{\tmp@one}{#3}%
+	\renewcommand{\tmp@two}{#4}%
+	\noindent\centerline{\noindent\fontsize{15pt}{\baselineskip}\selectfont\simsun{}#1}\par\vspace{0.35in}%
+	\phantomsection%
+	\newcommand{\ch@name}{#2}%
+	\directlua{register_section(nil,"\ch@name",nil,1,"\thepage")}%
+\centerline{\setfsize{15pt}#2}\vspace{0.21in}%
+\begingroup\setfsize{12pt}%
+%\setlength{\baselineskip}{1.5\fsize}%
+%\setlength{\parindent}{\widthof{一二}}%
+}{%
+\par\endgroup\par%
+\vspace{1.5\fsize}%
+\begingroup\noindent\fontsize{12pt}{18pt}\selectfont{}\textbf{\tmp@one}{\tmp@two}\par\endgroup\par%
+\newpage%
+}
+\newenvironment{acknowledgement}[1]{%
+	\newpage%
+	\phantomsection%
+	\directlua{register_section(nil,"#1",nil,1,"\thepage")}%
+	\centerline{\fontsize{16pt}{\baselineskip}\selectfont{}#1}\par\vspace{0.30in}%
+	\begingroup%
+	%\setlength{\parindent}{\widthof{一二}}%
+	\setfsize{12pt}%
+}{%
+	\par\endgroup%
+}
+\renewcommand{\cite}[1]{%
+	\nolinebreak\textsuperscript{\begingroup\fontsize{7pt}{\baselineskip}\selectfont{}%
+		\directlua{tex.print(get_cite_str("#1"))}%
+	\endgroup}%
+}
+\newcommand{\cita}[1]{%
+	{\begingroup\directlua{tex.print(get_cite_str("#1"))}\endgroup}%
+}
+\renewenvironment{bibliography}[1]{%
+	\newpage%
+	\phantomsection%
+	\directlua{register_section(nil,"#1",nil,1,"\thepage")}%
+	\centerline{\fontsize{16pt}{\baselineskip}\selectfont{}#1}\par\vspace{0.30in}%
+	\begingroup%
+	\setfsize{10.5pt}\setlength{\parindent}{0pt}\language\l@english%
+	\renewcommand{\bibitem}[2]{%
+		\directlua{register_bib("##1","\luaescapestring{\unexpanded{##2}}")}}%
+	\directlua{%
+		bibliography()
+	}%
+}{%
+\par\endgroup%
+}
+\newcommand{\citesec}[1]{%
+	\directlua{tex.print(cite_short("#1"))}%
+}
+\newcommand{\citesecfull}[1]{%
+	\directlua{tex.print(cite_long("#1"))}%
+}
+\renewcommand{\section}[2][last_section]{%
+	\newpage%
+	\begingroup%
+	\setcounter{subsection}{0}%
+	\setcounter{subsubsection}{0}%
+	\setcounter{equation}{0}%
+	\setcounter{figure}{0}%
+	\setcounter{table}{0}%
+	\setcounter{body}{0}%
+	\addtocounter{section}{1}%
+	\phantomsection%
+	\newcommand{\ch@name}{#2}%
+	\newcommand{\ch@label}{第\chsnum{\arabic{section}}章}%
+	\edef \ch@page {\thepage}%
+	%\directlua{register_section("\ch@label\luaescapestring{\ \ }"..token.get_macro("ch@name"))}%
+	\directlua{register_section("\ch@label","\ch@label\luaescapestring{\ \ }\luaescapestring{\ch@name}","#1")}%
+	\noindent\parbox[t]{\linewidth}{\centering\fontsize{16pt}{\baselineskip}\selectfont{}\ch@label\ \ \ch@name}%
+	\par\vspace{0.36in}%
+	\directlua{tex.prevdepth=32*65536}%
+	\endgroup%
+}
+\renewcommand{\subsection}[2][last_subsection]{%
+	\directlua{%
+		if (tex.count["c@subsection"]+tex.count["c@body"]>0) then
+			local g1=node.new("glue")
+			g1.width=12*65536
+			node.write(g1)
+		end
+	}%
+	\begingroup%
+	\setcounter{body}{0}%
+	\setcounter{subsubsection}{0}%
+	\addtocounter{subsection}{1}%%
+	\phantomsection%
+	\newcommand{\ch@name}{#2}%
+	\newcommand{\ch@label}{\arabic{section}.\arabic{subsection}}%
+	\edef \ch@page {\thepage}%
+	\directlua{register_section("\ch@label","\ch@label\luaescapestring{\ }"..token.get_macro("ch@name"),"#1")}%
+	\boldmath%
+	{\noindent\bfseries\fontsize{14pt}{\baselineskip}\selectfont{}\ch@label\ \ch@name\par}\nopagebreak\vspace{0.10in}%
+	\unboldmath\nopagebreak\endgroup%
+}
+\renewcommand{\subsubsection}[2][last_subsubsection]{%
+	\begingroup%
+	\setcounter{body}{0}%
+	\addtocounter{subsubsection}{1}%
+	\phantomsection
+	\newcommand{\ch@name}{#2}%
+	\newcommand{\ch@label}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}%
+	\edef \ch@page {\thepage}%
+	\directlua{register_section("\ch@label","\ch@label\luaescapestring{\ }"..token.get_macro("ch@name"),"#1")}%
+	\begingroup\noindent\fontsize{12pt}{18pt}\selectfont\ch@label\ \ch@name\par\endgroup\endgroup%\vspace{0.13in}
+}
+\newenvironment{body}[0]{%
+	\addtocounter{body}{1}%
+	\begingroup%
+	\setfsize{12pt}%
+	\renewcommand{\\}[1][0pt]{\par\vspace{##1}\noindent}%
+}{%
+	\par\endgroup%
+}%
+\renewenvironment{list}[3]{%
+	\begingroup%
+	\renewcommand{\item}{\noindent\rule{0pt-\widthof{#2}}{0pt}#2}%
+	\setlength{\baselineskip}{#3\fsize}%
+	\addtolength{\leftskip}{\widthof{#2}+\parindent+#1}%
+}{%
+	\endgroup
+}
+\newcommand{\headertext}{%
+   \ifodd\value{page}{南京工业大学本科生毕业设计（论文）}%
+   \else{%
+	   \directlua{%
+			tex.print(get_page_title())
+	   }%
+   }\fi%
+}
+\AtEndDocument{%
+	\directlua{save_data()}%
+}
+\AtBeginShipout{%
+	\directlua{page_id=page_id+1}%
+}
+\AtBeginPage{%
+	\ifnum\directlua{tex.print(page_id)}=0{}%
+	\else{%
+		\setlength{\unitlength}{1in}%
+		\put(1,-0.6){\centerline{\fontsize{10.5pt}{\baselineskip}\selectfont{}\headertext}}%
+		\put(1,-0.7){\centerline{\rule{\linewidth}{1.2pt}}}%
+		%\put(1,-11.3){\centerline{\fontsize{10.5pt}{\baselineskip}\selectfont{}\Roman{page}}}%
+	}\fi%
+}
+\renewcommand{\tableofcontents}[2]{%
+	\phantomsection%
+	\directlua{register_section(nil,"#1",nil,1,"\thepage")}%
+	\centerline{\fontsize{16pt}{\baselineskip}\selectfont{}#1}\vspace{2.0\fsize}%
+	\setcounter{tocdepth}{#2}%
+	\begingroup%
+	%\setlength{\baselineskip}{20pt}%
+	\@starttoc{toc}%
+	\par%
+	\endgroup%
+}
+\g@addto@macro\normalsize{%
+	\setlength\abovedisplayskip{0pt}%
+	\setlength\belowdisplayskip{0pt}%
+	\setlength\abovedisplayshortskip{0pt}%
+	\setlength\belowdisplayshortskip{0pt}%
+}
+\renewenvironment{equation}[1][noname]{%
+	\addtocounter{equation}{1}%
+	\immediate\write\@auxout{\string\directlua{equation["#1"]="(\arabic{section}-\arabic{equation})"}}%
+	\begingroup%
+	\setbox0\vbox\bgroup%
+	\setlength\abovedisplayskip{0pt}%
+	\setlength\belowdisplayskip{0pt}%
+	\setlength\abovedisplayshortskip{0pt}%
+	\setlength\belowdisplayshortskip{0pt}%
+	\fontsize{12pt}{12pt}\selectfont{}%
+	$$%
+}{%
+	\eqno\text{(\arabic{section}-\arabic{equation})}$$\egroup%
+	\directlua{fix_lineskip(0)}%
+	\endgroup%
+}
+\newcommand{\image}[4]{%
+	\addtocounter{figure}{1}%
+	\begingroup%
+	\setlength{\tmp@len@a}{#1}%
+	\setlength{\tmp@len@b}{#2}%
+	\edef \name {图\arabic{section}-\arabic{figure}}%
+	\newcommand{\file}{#3}%
+	\newcommand{\imageatcaption}{\fontsize{10.5pt}{10.5pt}\selectfont{}\name\ \ #4}%
+	\directlua{%
+		image_layout_caption("\the\tmp@len@a",13,"\luaescapestring{\string\imageatcaption}")
+	}%
+	\endgroup%
+}
+\newcommand{\imagetitle}[3]{%
+	\addtocounter{table}{1}%
+	\begingroup%
+	\edef \name {图\arabic{section}-\arabic{figure}}%
+	\directlua{register_image("#1","\name"}%
+	\nopagebreak\begingroup\nopagebreak#3\endgroup\par%\vspace{0.5\fsize}
+	\centerline{\fontsize{10.5pt}{10.5pt}\selectfont{}\name\ \ #2}%
+	\endgroup%
+}
+\newcommand{\table@name}{表\arabic{section}-\arabic{table}}
+\newcommand{\tablereg}[2][nothing]{%
+	\begingroup%
+	\addtocounter{table}{1}%
+	\directlua{register_tabular("#2","\table@name")}%
+	\addtocounter{table}{-1}%
+	\endgroup%
+}
+\newcommand{\tabletitle}[3]{%
+	\addtocounter{table}{1}%
+	\begingroup%
+	\directlua{register_tabular("#1","\table@name")}%
+	\centerline{\fontsize{10.5pt}{10.5pt}\selectfont{}\table@name\ \ #2}\nopagebreak\vspace{6pt}%
+	\nopagebreak\begingroup\nopagebreak#3\endgroup\par\vspace{0.5\fsize}%
+	\endgroup%
+}
+\newcommand{\tableimage}[4]{%
+	\addtocounter{table}{1}%
+	\begingroup%
+	\setlength{\parskip}{6pt}%
+	\newcommand{\temp}{\fontsize{10.5pt}{10.5pt}\selectfont{\table@name\ \ #4}}%
+	\directlua{register_tabular(string.match("#3","\luaescapestring{[^.]+}"),"\table@name")}%
+	\newcommand{\tallA}{\heightof{\includegraphics[width=#1,keepaspectratio]{#3}}}%
+	\newcommand{\tallB}{\heightof{\parbox{#1}{\centering\temp}}}%
+	\ifdim#2=0pt{%
+	\noindent\parbox[c]{#1}{%
+		\setlength{\parskip}{0pt}%
+		\centering%
+		\noindent{\includegraphics[width=#1,keepaspectratio]{#3}}\par%
+		\noindent{\temp}}\par%
+	}\else{%
+	\noindent\parbox[c][#2][c]{#1}{%
+		\setlength{\parskip}{0pt}%
+		\centering%
+		\noindent{\includegraphics[width=#1,height=#2-\tallB,keepaspectratio]{#3}}\par%
+		\noindent{\temp}}\par%
+	}\fi%
+	\vspace{6pt}%
+	\endgroup%
+}
+\newcommand{\citeimg}[1]{\directlua{if image["#1"] then tex.print(image["#1"]) else tex.print("<?>") end}}
+\newcommand{\citetbl}[1]{\directlua{if tabular["#1"] then tex.print(tabular["#1"]) else tex.print("<?>") end}}
+\newcommand{\citeeq}[1]{\directlua{if equation["#1"] then tex.print(equation["#1"]) else tex.print("<?>") end}}
+\newcommand{\nfeqid}{\begingroup\addtocounter{equation}{1}(\arabic{section}-\arabic{equation})\addtocounter{equation}{-1}\endgroup}
+\newcommand{\nbeqid}{(\arabic{section}-\arabic{equation})}
+\makeatother

@@ -1,0 +1,389 @@
+%--#pragma build_command make manual
+\documentclass[a4paper]{article}
+%模版核心文件路径前缀，图片路径前缀。
+\directlua{
+	style_prefix="./style"
+	resource_prefix="./figure"
+}
+\include{"style/style"}
+%%%行距
+\setlinestrech{1.5}
+\usepackage[unicode,hidelinks,
+%implicit=false,
+pdfpagelayout=SinglePage,
+pdftitle=NJUT Thesis Template,
+pdfauthor=faimerth,
+pdfcreator=faimerth,
+]{hyperref}
+\newcommand{\itemA}{\raisebox{0.2\fsize}{\scalebox{0.6}{$\bullet$}}\ }
+\begin{document}
+	%------论文翻译可以使用此封面，正式论文请使用include<front.pdf>------%
+	\begin{titlepage}{20xx届本科毕业设计(论文)}{原力科学学院}
+		\entry{题目}{The Dark Side of Force is More Powerful}
+		\entry{专业}{Sith Lord}
+		\entry{班级}{Class 666}
+		\entry{姓名}{Luke}
+		\entry{指导老师}{Darth Vader\qquad}
+		\entry{起讫日期}{2019.1 - 2019.6\qquad}
+	\end{titlepage}
+	%----------------------------正式论文封面-------------------------%
+	%\includepdfmerge{front.pdf}
+	%-------------------------------------------------------%
+	%\pagestyle{empty}%
+	%-------------------------目录样式(不需修改)------------------------------%
+	\newgeometry{top=2.5cm,bottom=2cm,left=2.5cm,right=2cm}%%页边距
+	\titlecontents{section}[0pt]{\fontsize{14pt}{24pt}\selectfont\simhei\boldmath}%
+	{\contentslabel{2.5em}}{}%
+	{\unboldmath\titlerule*[0.5pc]{$\cdot$}{\fontsize{12pt}{24pt}\selectfont\simsun\contentspage}\hspace*{0pt}}%
+	\titlecontents{subsection}[20pt]{\fontsize{12pt}{24pt}\selectfont\simsun}%
+	{\contentslabel{2.5em}}{}%
+	{\titlerule*[0.5pc]{$\cdot$}\contentspage\hspace*{0pt}}%
+	\titlecontents{subsubsection}[40pt]{\fontsize{12pt}{24pt}\selectfont\simsun}%
+	{\contentslabel{2.5em}}{}%
+	{\titlerule*[0.5pc]{$\cdot$}\contentspage\hspace*{0pt}}%
+	%-------------------------------------------------------%
+	\begingroup\pagenumbering{Roman}
+	%-------------------------中文摘要------------------------------%
+	\begin{abstract}{南京工业大学本科生毕业论文LuaTex模版}{摘要}{关键词：}{LuaTex\ \ 模版\ \ 模版\ \ 模版}
+		本模板旨在加速本科论文撰写，减少调整格式的时间。但目前模版大部分设想未实现，只适合普通本科论文。\par
+		所有格式定义文件都在\gqq{}./style\cqq{}目录下。其中.tex为宏命令，为用户调用模版功能的接口。而.lua文件为绝大部分宏命令的具体实现。\par
+	\end{abstract}
+	%-------------------------英文摘要------------------------------%
+	\begin{abstractE}{NJUT Bachelor Thesis Template}{ABSTRACT}{Keywords:\ }{LuaTex;\ Template;\ Template;\ Template}
+	   The Hadamard transform is an example of a generalized class of Fourier transforms. It can be regarded as being built out of size-2 discrete Fourier transforms (DFTs), and is in fact equivalent to a multidimensional DFT of size $2\times2\times\cdots\times2\times2$.\par
+	\end{abstractE}
+	%----------------------------目录标题/目录展开级别----------------------------------%
+	\tableofcontents{目录}{3}
+	\endgroup
+%------------------------------正文--------------------------------%
+	\newpage
+	\setcounter{page}{1}
+	\pagenumbering{arabic}
+	\section{导言、后记部分使用说明}
+	\begin{body}
+		(1) 封面\par
+		封面制作提供两种方式，一修改{\gqq}封面.doc{\cqq}输出为front.pdf放根目录下；二用Inkscape直接编辑空白{\gqq}front.pdf{\cqq}。\par
+		(2) 页边距\par
+		采用geometry宏包的{\color{purple}\noindent{\bslash}newgeometry}\{top=2.5cm, bottom=2cm, left=2.5cm, right=2cm\}配置。PS: 左右边距不同最好单面打印。\par
+		(3) 中文摘要\par
+		%------------------%
+		{\color{purple}\noindent{\bslash}begin\{{\color{teal}abstract}\}}\{{\color{gray}$\langle$论文标题$\rangle$}\}\{{\color{gray}$\langle$摘要标题$\rangle$}\}\{{\color{gray}$\langle$关键词标题$\rangle$}\}\{{\color{gray}$\langle$关键词内容$\rangle$}\}\\
+		\indent{\color{gray}$\langle${}摘要内容$\rangle$}\\
+		{\color{purple}{\bslash}end\{{\color{teal}abstract}\}}\par
+		%------------------%
+		填入内容后摘要自动生成，但关键词分隔符(空格)需要手打。\par
+		(4) 英文摘要\par
+		%------------------%
+		{\color{purple}\noindent{\bslash}begin\{{\color{teal}abstractE}\}}\{{\color{gray}$\langle$论文标题$\rangle$}\}\{{\color{gray}$\langle$摘要标题$\rangle$}\}\{{\color{gray}$\langle$关键词标题$\rangle$}\}\{{\color{gray}$\langle$关键词内容$\rangle$}\}\\
+		\indent{\color{gray}$\langle${}摘要内容$\rangle$}\\
+		{\color{purple}{\bslash}end\{{\color{teal}abstractE}\}}\par
+		%------------------%
+		英文摘要环境用法与中文的相同。(逗号分隔符）\par
+		(5) 目录\par
+		目录样式采用titletoc宏包的{\color{purple}{\bslash}titlecontents}配置。模版已按学校标准配置好，可完全自动生成目录不需要任何干预。\par
+		(6) 致谢\par
+		{\color{purple}\noindent{\bslash}begin\{{\color{teal}acknowledgement}\}}\{{\color{gray}$\langle$标题$\rangle$}\}\\
+		\indent{\color{gray}$\langle${}内容$\rangle$}\\
+		{\color{purple}{\bslash}end\{{\color{teal}acknowledgement}\}}\par
+		致谢环境用法。\par
+	\end{body}
+	\section{标题正文格式命令}
+	\begin{body}
+		各级标题格式重定义{\color{purple}\bslash{}section}、{\color{purple}\bslash{}subsection}、{\color{purple}\bslash{}subsubsection}来实现，以方便TeX Studio等编辑器识别文章结构。详细命令使用说明如下:\\[-2pt]
+		\fixlineskip{\hspace{-6pt}\begin{tabular}{ll}
+		{\color{purple}{\bslash}section}[{\color{gray}$\langle$引用名$\rangle$}]\{{\color{gray}$\langle$标题名$\rangle$}\}&声名标题和引用名(可选，默认为last\_section)。\\
+		{\color{purple}{\bslash}citesec}\{{\color{gray}$\langle$引用名$\rangle$}\}&
+		引用标题编号。\gqq\citesec{fragile2}\cqq\\
+		{\color{purple}{\bslash}citesecfull}\{{\color{gray}$\langle$引用名$\rangle$}\}&
+		引用标题全部内容。\gqq\citesecfull{fragile2}\cqq\\
+		\end{tabular}\\[-2pt]}
+		\textbf{PS: 标题内容会被完全展开，因此不能包含\gqq{}fragile\cqq{}的宏命令(如{\color{purple}{\bslash}reflectbox}、{\color{purple}{\bslash}frac})。如果一定要有，请用{\color{purple}{\bslash}unexpanded}括起来，如果你不知道哪个该括那你就全括起来。如\citesec{fragile1}、\citesec{fragile2}的标题。}\par
+	\end{body}
+	\subsection{字号、行距}
+	\begin{body}
+		{\noindent\color{purple}\bslash{}renewcommand}\{{\color{purple}\bslash{}linestretch}\}\{{\color{gray}$\langle${}行距倍数$\rangle$}\}\par
+		行距倍数为小数。作用范围为一个花括号(或{\color{purple}\bslash{}begingroup} .. {\color{purple}\bslash{}endgroup})。\par
+		\noindent{}{\color{purple}{\bslash}setfsize}\{{\color{gray}$\langle$字号$\rangle$}\}\par
+		包装{\color{purple}{\bslash}fontsize}命令。自动调整{\color{purple}\bslash{}baselineskip}的数值为{\color{purple}\bslash{}linestretch}倍数的字体高度。作用范围一个花括号。PS: 这种行距定义不能生成和Word完全相同的成品，如果你对此在意可以自行调整calc\_linestretch函数\par
+		\noindent{}{\color{purple}{\bslash}fix\_lineskip}\{{\color{gray}$\langle$任意内容$\rangle$}\}\par
+		用于修正表格、公式等特殊内容的上下空白，你需要保证内容里没有添加额外的空白。内容自成一行(出现在\gqq{}main vlist\cqq{}上)。\par
+	\end{body}
+	\subsection{正文格式命令}
+	\begin{body}
+		%-----这部分删除-----%
+		{\color{purple}\noindent{\bslash}begin\{{\color{teal}body}\}}\\
+		\indent{\color{gray}$\langle${}正文内容$\rangle$}\\
+		{\color{purple}{\bslash}end\{{\color{teal}body}\}}\par
+		%------------------%
+		正文写在body环境内。兼容所有latex命令。\par
+	\end{body}
+	\section{一级标题三号(16pt)宋体居中公式换行$\alpha+\beta+\gamma+\delta+\epsilon+\zeta+\eta+\theta+\iota+\kappa+\lambda$}
+	\subsection{二级标题四号(14pt)宋体加粗居左}
+	\begin{body}
+		正文小四号(12pt)宋体，行距(baselineskip)1.5倍。\par
+	\end{body}
+	\subsection{二级标题之间加一空行}
+	\subsubsection{三级标题格式与正文相同但无缩进}
+	\begin{body}
+		1. 四级标题首行缩进两个字符，宋体小四号字\par
+		(1) 五级标题首行缩进两个字符，宋体小四号字\par
+		从这里可以清楚地看到缩进为两个字符。正文正文正文正文正文正文正文正文正文正文正一二三四五六。\par
+	\end{body}
+	\section[fragile1]{标题中有\unexpanded{\gqq{}fragile\cqq{}}命令的示例，去掉unexpanded会编译失败\unexpanded{\textbf{(}$_\mathbf{\circ\;}${\scriptsize\textbullet}\hspace{1pt}{\textbf{\raisebox{-2pt}{\`{}}\hspace{2pt}$\upomega$\reflectbox{\raisebox{-2pt}{\`{}}}}}\hspace{1pt}\raisebox{1pt}{$\mathbf{\centerdot}$}\hspace{2pt}\textbf{)}}}
+	\section{图片}
+	\begin{body}
+		\noindent{}{\color{purple}\noindent{\bslash}citeimg}\{{\color{gray}$\langle$引用名$\rangle$}\}\par
+		引用图片。默认格式{\gqq}\citeimg{img1}{\cqq}。\par
+		\noindent{}{\color{purple}\noindent{\bslash}image}\{{\color{gray}$\langle$总宽度$\rangle$}\}\{{\color{gray}$\langle$总高度$\rangle$}\}\{{\color{gray}$\langle$图片文件名$\rangle$}\}\{{\color{gray}$\langle$图题$\rangle$}\}\par
+		总宽、总高为图片加标题的宽度和高度，高度可以为0表示缩放至宽度。文件支持.pdf、.png、.jpg，扩展名前面的部分作为引用名。标题自动命名，格式为{\gqq}图+章节序号+图在本章序号{\cqq}。图题若一行放不下居左，否则居中。{图题第一行与图片之间不会换页。}\par
+		\noindent{}{\color{purple}\noindent{\bslash}imagetitle}\{{\color{gray}$\langle$引用名$\rangle$}\}\{{\color{gray}$\langle$图题$\rangle$}\}\{{\color{gray}$\langle$此部分会出现在图题上方$\rangle$}\}\par
+		该命令为{\color{purple}\noindent{\bslash}image}的简化版，旨在提供进行手工图片排版的接口，只加入图题并注册引用名。{图题上方依然会阻止换页。}
+	\end{body}
+	\subsection{示例}
+	\begin{body}
+		我插入了一张图片，如果该图片路径不存在会变成下面这样\gqq\citeimg{img1}\cqq。\par
+		\image{\linewidth}{200pt}{img1.pdf}{测试图片}
+		引用上面的图片\gqq\citeimg{img1}\cqq。\par
+	\end{body}
+	\section{表格}
+	\begin{body}
+		\noindent{}{\color{purple}\noindent{\bslash}citetbl}\{{\color{gray}$\langle$引用名$\rangle$}\}\par
+		引用表格。默认格式\gqq{}表3-2\cqq{}。\par
+		\noindent{}{\color{purple}\noindent{\bslash}tableimage}\{{\color{gray}$\langle$总宽度$\rangle$}\}\{{\color{gray}$\langle$总高度$\rangle$}\}\{{\color{gray}$\langle$图片文件名$\rangle$}\}\{{\color{gray}$\langle$表题$\rangle$}\}\par
+		你可以用Inkscape的高级绘图工具制作表格，并以图片形式加入，用法与{\color{purple}\noindent{\bslash}image}相同。{表题最后一行与图片之间不会换页。}\par
+		\noindent{}{\color{purple}\noindent{\bslash}tabletitle}\{{\color{gray}$\langle$引用名$\rangle$}\}\{{\color{gray}$\langle$表题$\rangle$}\}\{{\color{gray}$\langle$此部分会出现在表题下方$\rangle$}\}\par
+		该命令与{\color{purple}\noindent{\bslash}imagetitle}类似，旨在提供手工做表接口，只加入表题并注册引用名。{表题下方会阻止换页。}\par
+	\end{body}
+	\subsection{示例}
+	\begin{body}
+		下面是使用TeX绘制的表格，{\gqq}\citetbl{table1}{\cqq}和{\gqq}\citetbl{table2}{\cqq}。Tex的表格功能是\par
+		\tabletitle{table1}{用于建造星际熔炉的混凝土配合比}{
+			\noindent{\fontsize{12pt}{12pt}\selectfont{}\begin{tabularx}{\linewidth}{@{\extracolsep{\fill}}ccccccccc}
+			\thickhline
+			\multicolumn{7}{c}{\vspace{-7pt}}\\
+			&\multirow{2}{*}{WC}&\multicolumn{5}{c}{\Gape[0\jot][4pt]{配合比$(kg/m^3)$}}&\multirow{2}{*}{SP}&\\
+			\cline{3-7}
+			&&Niobium&\Gape[1\jot][0\jot]{Isoresin}&Visco-Gel&Fullerene&Magma&\\
+			\multicolumn{9}{c}{\vspace{-9pt}}\\
+			\hline
+			\multicolumn{9}{c}{\vspace{-3pt}}\\
+			&\multirow{2}{*}{0.66}&0&\multirow{2}{*}{444}&\multirow{2}{*}{777}&\multirow{2}{*}{1111}&\multirow{2}{*}{188}&\multirow{2}{*}{0.33}&\\
+			&&\Gape[1.5\jot][0\jot]{20}&\\
+			\multicolumn{9}{c}{\vspace{-7pt}}\\
+			\thickhline
+		\end{tabularx}}}\par
+		\tabletitle{table2}{死星中央电脑内存使用记录}{
+		\noindent{\centerline{\fontsize{12pt}{12pt}\selectfont{}\begin{tabular}{||c||c||c||c||c||c||c||c||c||c||c||c||}
+			\hhline{|t:=:t:==========:t:=:t|}
+			\multirow{2}{1em}{{\parbox[c]{1em}{\centering{}时刻T}}}&\multicolumn{10}{c||}{\rule{0pt}{14pt}内存占用情况}&\multirow{2}{4em}{进程事件}\\
+			\hhline{||~|:=:t:=:t:=:t:=:t:=:t:=:t:=:t:=:t:=:t:=:|~||}
+			&\rule{0pt}{18pt}0&1&2&3&4&5&6&7&8&9&\\
+			\hhline{|:=::=:b:=:b:=::=::=::=::=::=::=::=::=:|}
+			\Gape[3\jot][2\jot]{1}&\multicolumn{3}{c||}{\cellcolor{gray!30!white}A}&&&&&&&&进程A申请空间（M=3,P=10）<成功>\\
+			\hhline{|:=::===::=:b:=:b:=:b:=::=::=::=::=:|}
+			\Gape[3\jot][2\jot]{2}&\multicolumn{3}{c||}{\cellcolor{gray!30!white}A}&\multicolumn{4}{c||}{\cellcolor{violet!10!gray}B}&&&&进程B申请空间（M=4,P=3）<成功>\\
+			\hhline{|:=::===::====::=::=::=::=:|}
+			\Gape[3\jot][2\jot]{3}&\multicolumn{3}{c||}{\cellcolor{gray!30!white}A}&\multicolumn{4}{c||}{\cellcolor{violet!10!gray}B}&&&&进程C申请空间（M=4,P=4）<失败等待>\\
+			\hhline{|:=::===::====::=::=::=::=:|}
+			\Gape[3\jot][2\jot]{4}&\multicolumn{3}{c||}{\cellcolor{gray!30!white}A}&\multicolumn{4}{c||}{\cellcolor{violet!10!gray}B}&\cellcolor{gray!90!white}D&&&进程D申请空间（M=1,P=4）<成功>\\
+			\hhline{|:=::===::====::=::=::=::=:|}
+			{5}&\multicolumn{3}{c||}{\cellcolor{gray!30!white}A}&\multicolumn{4}{c||}{\cellcolor{brown!10!gray}C}&\cellcolor{gray!90!white}D&&&\parbox[c]{200pt}{\tikz\draw (0,0) node[align=center,text width=200pt]{进程B结束，释放空间.\\进程C从等待队列取出，分配空间.\\进程E申请空间（M=3,P=4）<失败等待>};}\\
+			\hhline{|:=::===::====::=::=::=::=:|}
+			\Gape[\jot][0\jot]{6}&\multicolumn{3}{c||}{\cellcolor{gray!30!white}A}&\multicolumn{4}{c||}{\cellcolor{brown!10!gray}C}&\cellcolor{gray!90!white}D&&&\\
+			\hhline{|:=::===::====::=::=::=::=:|}
+			\Gape[\jot][0\jot]{7}&\multicolumn{3}{c||}{\cellcolor{gray!30!white}A}&\multicolumn{4}{c||}{\cellcolor{brown!10!gray}C}&\cellcolor{gray!90!white}D&&&\\
+			\hhline{|:=::===::====::=:b:=:b:=::=:|}
+			\Gape[0\jot][0\jot]{8}&\multicolumn{3}{c||}{\cellcolor{gray!30!white}A}&\multicolumn{4}{c||}{\cellcolor{brown!10!gray}C}&\multicolumn{3}{c||}{\cellcolor{gray}E}&\parbox[c]{200pt}{\tikz\draw (0,0) node[align=center,text width=200pt]{进程D结束，释放空间.\\进程E从等待队列取出，分配空间};}\\
+			\hhline{|:=::===::=:t:=:t:=:t:=::===::=:|}
+			\Gape[3\jot][2\jot]{9}&\multicolumn{3}{c||}{\cellcolor{gray!30!white}A}&&&&&\multicolumn{3}{c||}{\cellcolor{gray}E}&进程C结束，释放空间\\
+			\hhline{|:=::===::=::=::=::=::===::=:|}
+			\Gape[\jot][0\jot]{10}&\multicolumn{3}{c||}{\cellcolor{gray!30!white}A}&&&&&\multicolumn{3}{c||}{\cellcolor{gray}E}&\\
+			\hhline{|:=::=:t:=:t:=::=::=::=::=::===::=:|}
+			\Gape[3\jot][2\jot]{11}&&&&&&&&\multicolumn{3}{c||}{\cellcolor{gray}E}&进程A结束，释放空间\\
+			\hhline{|:=::=::=::=::=::=::=::=::=:t:=:t:=::=:|}
+			\Gape[3\jot][2\jot]{12}&&&&&&&&&&&进程E结束，释放空间\\
+			\hhline{|b:=:b:=:b:=:b:=:b:=:b:=:b:=:b:=:b:=:b:=:b:=:b:=:b|}
+		\end{tabular}}}}\par
+	\end{body}
+	\section[fragile2]{公式\unexpanded{$\frac{\alpha}{\beta}$}}
+	\begin{body}
+		TeX的公式排版相当完善(除了不能换页和前后空白)，本模版仅对字号、公式号、前后距离做了设置，另附带引用功能。\par
+	\end{body}
+	\subsection{命令说明}
+	\begin{body}
+		\noindent{}{\color{purple}\noindent{\bslash}nfeqid}\par
+		下方第一个公式号。默认格式{\gqq}(3-1){\cqq}。\par
+		\noindent{}{\color{purple}\noindent{\bslash}nbeqid}\par
+		上方第一个公式号。默认格式{\gqq}(3-2){\cqq}。\par
+		\noindent{}{\color{purple}\noindent{\bslash}citeeq}\{{\color{gray}$\langle$引用名$\rangle$}\}\par
+		引用公式。默认格式\gqq{}(3-2)\cqq{}。\par
+		{\color{purple}\noindent{\bslash}begin\{{\color{teal}equation}\}}[{\color{gray}$\langle$引用名$\rangle$}]\\
+		\indent{\color{gray}$\langle${}\$\$公式环境\$\$$\rangle$}\\
+		{\color{purple}{\bslash}end\{{\color{teal}equation}\}}\par
+		和\gqq\$\$...\$\$\cqq 公式环境完全相同，自动编号。公式中间不能换页。\par
+		\noindent{}{\color{purple}\noindent{\bslash}xLongleftrightarrow}\{{\color{gray}$\langle$参数$\rangle$}\}\{{\color{gray}$\langle$上方文字$\rangle$}\}\par
+		生成这个$\xLongleftrightarrow{10.0}{我在上面}$，用$\Leftarrow=\Rightarrow$拼接而成，参数为等号的水平放大倍数。\par
+	\end{body}
+	\subsection{示例}
+	\begin{body}
+		我可以通过引用名直接引用{\gqq}\citeeq{Cooley-Turkey}{\cqq}，或者用相对位置引用，下方第一个公式{\gqq}\nfeqid{\cqq}。\par
+		\begin{equation}
+		\begin{gathered}
+		\begin{vmatrix}
+		f'_{1}\\
+		f'_{2}\\
+		\end{vmatrix}\ \leftarrow\
+		\begin{vmatrix}
+		f_{1}+\omega f_{2}\\
+		f_{1}-\omega f_{2}\\
+		\end{vmatrix}
+		\qquad\xLongleftrightarrow{8.0}{Inverse}\qquad
+		\begin{vmatrix}
+		f_{1}\\
+		f_{2}\\
+		\end{vmatrix}\ \leftarrow\
+		\begin{vmatrix}
+		\frac{1}{2}(f'_{1}+f'_{2})\\
+		\frac{1}{2}\omega^{-1}(f'_{1}-f'_{2})\\
+		\end{vmatrix}\\
+		\widetilde{\tilde{a}+\tilde{b}}=\tilde{a}+\tilde{b},\quad\widetilde{\tilde{a}-\tilde{b}}=\tilde{a}-\tilde{b},\quad\widetilde{\tilde{a}\times\tilde{b}}=MR(\tilde{a},\tilde{b})\\
+		\end{gathered}
+		\end{equation}
+		上方第一个公式{\gqq}\nbeqid{\cqq}。\par
+		\begin{equation}
+		\begin{aligned}
+		X\ mod\ P_{1}P_{2}P_{3}&=\underbrace{x_3}_{y_3}+\underbrace{((x_2-x_3)P_3^{-1}\ mod\ P_2)}_{y_2}P_3\\
+		&+\underbrace{[[x_1-(\;\underbrace{x_3}_{y_3}+P_3\underbrace{((x_2-x_3)P_3^{-1}\ mod\ P_2)}_{y_2}\;)\;]P_2^{-1}P_3^{-1}\ mod\ P_1]}_{y_1}P_2P_3
+		\end{aligned}
+		\end{equation}
+		\begin{equation}[Cooley-Turkey]
+			\begin{aligned}
+			f_{k}=&\sum\nolimits_{i=0}^{N-1}\omega_{n}^{ik}a_{i}\qquad\quad\text{\tiny $(k<\frac{1}{2}N)$}\\
+			=&\sum\limits_{i=0}^{\frac{1}{2}N-1}\omega_{n}^{2ik}a_{2i}+\sum\limits_{i=0}^{\frac{1}{2}N-1}\omega_{n}^{(2i+1)k}a_{2i+1}\\
+			=&\sum\limits_{i=0}^{\frac{1}{2}N-1}\omega_{\frac{1}{2}n}^{ik}a_{2i}+\sum\limits_{i=0}^{\frac{1}{2}N-1}\omega_{n}^{k}\omega_{\frac{1}{2}n}^{ik}a_{2i+1}\\
+			=&f^{even}_{k}+\omega_{n}^{k}\cdot f^{odd}_{k}\\
+			\\
+			f_{k+\frac{1}{2}N}		=&\sum\limits_{i=0}^{\frac{1}{2}N-1}\omega_{n}^{2i(k+\frac{1}{2}N)}a_{2i}+\sum\limits_{i=0}^{\frac{1}{2}N-1}\omega_{n}^{(2i+1)(k+\frac{1}{2}N)}a_{2i+1}\\
+			=&\sum\limits_{i=0}^{\frac{1}{2}N-1}\omega_{n}^{2ik+iN}a_{2i}+\sum\limits_{i=0}^{\frac{1}{2}N-1}\omega_{n}^{2ik+k+iN+\frac{1}{2}N}a_{2i+1}\\
+			=&f^{even}_{k}+\omega_{n}^{\frac{1}{2}{n}}\omega_{n}^{k}\cdot f^{odd}_{k}\\
+			=&f^{even}_{k}+\omega_{2}\,\omega_{n}^{k}\cdot f^{odd}_{k}\\
+			=&f^{even}_{k}-\omega_{n}^{k}\cdot f^{odd}_{k}\qquad\text{\scriptsize (P is prime $\Rightarrow\ \omega_{2}=-1$)}
+			\end{aligned}
+		\end{equation}
+		\begin{equation}[DFT]
+			\text{DFT:}\qquad
+			\begin{pmatrix}
+			f_{0}\\
+			f_{1}\\
+			f_{2}\\
+			\vdots\\
+			f_{n-1}\\
+			\end{pmatrix}
+			=
+			\begin{bmatrix}
+			1&1&1&\cdots&1\\
+			1&\omega_{n}&\omega_{n}^{2}&\cdots&\omega_{n}^{(n-1)}\\
+			1&\omega_{n}^{2}&\omega_{n}^{4}&\cdots&\omega_{n}^{2(n-1)}\\
+			\vdots&\vdots&\vdots&\ddots&\vdots\\
+			1&\omega_{n}^{n-1}&\omega_{n}^{2(n-1)}&\cdots&\omega_{n}^{(n-1)(n-1)}\\
+			\end{bmatrix}
+			\begin{pmatrix}
+			a_{0}\\
+			a_{1}\\
+			a_{2}\\
+			\vdots\\
+			a_{n-1}\\
+			\end{pmatrix}
+		\end{equation}
+		\begin{equation}
+		   \lambda(M)\equiv\left\lbrace\begin{aligned}
+		   &(P-1)P^{e-1}&&(M=P^e,P>2)\vee(M=2,4)\\
+		   &2^{e-2}&&(M=2^e,e>2)\\
+		   &lcm(\lambda(A),\lambda(B))&&(gcd(A,B)=1)\\
+		   \end{aligned}\right.
+		\end{equation}
+	\end{body}
+	\section{参考文献示例}
+	\begin{body}
+		参考文献独立为一章，文献顺序根据引用顺序自动排列，未引用的文献不会出现，未声明的参考文献的引用号会以这种形式\cite{JB-ICPC}出现。常用的文献类型，学位论文\cite{thesis1}，论文集\cite{col1}，书籍\cite{book1,book2,book3}，标准\cite{standard1,standard2,standard3,standard4}，期刊\cite{journal1}，互联网\cite{online1}。连续的引用号超过三个会自动合并\cite{standard3,standard4,book1,book2,book3}。\par
+		后文示例为GB/T 7714-87标准，但本模版没有涉及任何特定标准，条目内容可自由修改。\par
+	\end{body}
+	\subsection{命令用法}
+	\begin{body}
+		\noindent{}{\color{purple}\noindent{\bslash}cite}\{{\color{gray}$\langle$引用名称$\rangle$}\}\par
+		上标引用。换行不会发生在方括号前面和里面。超长引用号出现在尴尬的位置上会这样\cite{thesis1,standard1,standard2,book1,book2,standard4,journal1,空白,empty2}。引用名可以包含任意非Tex控制字符。\par
+		\noindent{}{\color{purple}\noindent{\bslash}cita}\{{\color{gray}$\langle$引用名称$\rangle$}\}\par
+		非上标式引用。换行可以发生在方括号前面。超长引用号出现在尴尬的位置上时可以这样\cita{thesis1,standard1,standard2,book1,book2,standard4,journal1,空白,empty2}。\par
+		{\color{purple}\noindent{\bslash}begin\{{\color{teal}bibliography}\}}\{{\color{gray}$\langle$参考文献标题$\rangle$}\}\\
+		{\color{purple}\indent{\bslash}bibitem}\{{\color{gray}$\langle$用于在文中引用的文献名称$\rangle$}\}\{{\color{gray}$\langle$出现在参考文献的条目内容$\rangle$}\}\\
+		\indent{\color{gray}$\langle${}这部分内容会出现所有参考文献条目最后$\rangle$}\\
+		{\color{purple}{\bslash}end\{{\color{teal}bibliography}\}}\par
+		自动从根目录下的bibliography.in读入条目生成参考文献章节。\bslash{}bibitem可手工添加文献条目。\par
+	\end{body}
+	\subsection{bibliography.in格式}
+	\begin{body}
+		\colorbox{lightgray}{\parbox[t]{0.4\linewidth}{\setlength{\parindent}{0pt}%
+				$\langle$引用名称$\rangle$\par
+				$\langle$之后多行会连接在起$\rangle$\par
+				\quad$\cdots$\par
+				$\langle$，并在各行间加一个空格$\rangle$\par
+				$\langle$空白行表示一个条目结束$\rangle$\par
+				$\langle$其他条目$\rangle$\par
+				\quad$\cdots$\par
+		}}
+		\parbox[t]{4pt}{\par|\\|\\|\\|\\|\\|\\|\par}
+		\colorbox{lightgray}{\parbox[t]{0.4\linewidth}{\setlength{\parindent}{0pt}%
+				book1\par
+				Wilhuff T.\par
+				Death Star Employee Handbook[M].\par
+				Death Star: Empire Publishing, 2.\par
+				$\langle$Blank$\rangle$\par
+				journal1\par
+				\quad$\cdots$\par
+		}}
+	\end{body}
+	\subsection{附录}
+	\begin{body}
+		根据GB7714-87及GB3469规定，对参考文献类型在文献题名后应该用方括号加以标引，以单字母方式标志以下各种参考文献类型：\par
+		(1)连续出版物(期刊)\par
+		[序号] 作者(, 第二作者, 第三作者等). 文献题名[J]. 刊名, 出版年, 卷(期)号: 起始页码{\stilde}终止页码.\par
+		(2)专著类\par
+		[序号] 作者. 书名[M]. 版本(第一版不标注). 出版地: 出版者, 出版年.\par
+		(3)译著类\par
+		[序号] 作者[国藉]. 书名[M]. 译者. 出版地: 出版者, 出版年.\par
+		(4)论文集类\par
+		[序号] 作者. 文献题名[A]. 编者. 论文集名[C]. 出版地：出版者, 出版年. 起始页码－终止页码.\par
+		(5)学位论文类\par
+		[序号] 作者. 文献题名[D]. (英文用[Dissertation]). 所在城市: 单位, 年份.\par
+		(6)专利\par
+		[序号] 申请者. 专利题名[P]. 专利国别: 专利号, 发布日期.\par
+		(7)技术标准\par
+		[序号] 技术标准代号. 技术标准名称[S].\par
+		(8)技术报告\par
+		[序号] 作者. 文献题名[R]. 报告代码及编号, 地名: 责任单位, 年份.\par
+		(9)报纸文章\par
+		[序号] 作者. 文献题名[N]. 报纸名, 出版日期(版次).\par
+		(10)电子公告\slash{}在线文献\par
+		[序号] 作者. 文献题名[EB/OL]. http:{\slash\slash}…, 日期.\par
+		(11)数据库\slash{}光盘文献\par
+		[序号] 作者. 文献题名[DB\slash{}CD]. 出版地: 出版者, 出版日期.\par
+		(12)其他文献\par
+		[序号] 作者. 文献题名[Z]. 出版地: 出版者, 出版日期.\par
+	\end{body}
+	%----------------------------------------
+	\begin{bibliography}{我是参考文献}
+		这部分内容会出现在本章最后。这部分内容会出现在本章最后。这部分内容会出现在本章最后。这部分内容会出现在本章最后。这部分内容会出现在本章最后。这部分内容会出现在本章最后。这部分内容会出现在本章最后。这部分内容会出现在本章最后。这部分内容会出现在本章最后。这部分内容会出现在本章最后。这部分内容会出现在本章最后。\par
+		\bibitem{standard1}{GB/T 50080-2634, 共和国建筑混凝土技术标准[S]. 科洛桑: 银河议会出版社, 2634.}
+		\bibitem{standard2}{RP 2333 (A), 共和国民用飞船建造标准[S]. 科洛桑: 银和议会出版社, 2634.}
+		\bibitem{standard3}{RP 2333 (B), 共和国军用设施建造标准[S]. 科洛桑: 银河议会出版社, 2634.}
+		\bibitem{standard4}{JB 0000, Jedi Lightsaber Technical Standard[S]. Ossus: Great Jedi Library Press, 31653.}
+		\bibitem{空白}{样例文献. 样例文献 ...}
+		\bibitem{empty2}{样例文献. 样例文献 ...}
+		\bibitem{empty3}{样例文献. 样例文献 ...}
+		\bibitem{empty}{这个文章没出现, 这个文章没出现, 这个文章没出现. 文章[J]. ...}
+	\end{bibliography}
+	\begin{acknowledgement}{致谢}
+	   本人由于精力有限使用说明不近详细，还请谅解。\par
+	   感谢LuaTex开启了我\sout{重写Tex}学习Tex内部机制的大门。\par
+	\end{acknowledgement}
+\end{document}

@@ -1,0 +1,127 @@
+%--#pragma build_command make
+\documentclass[a4paper]{article}
+%模版核心文件路径前缀，图片路径前缀。
+\directlua{
+	style_prefix="./style"
+	resource_prefix="./figure"
+}
+\include{"style/style"}
+%%%行距
+\setlinestrech{1.5}
+\usepackage[unicode,hidelinks,
+%implicit=false,
+pdfpagelayout=SinglePage,
+pdftitle=I'm your Father!!,
+pdfauthor=Luke,
+pdfcreator=Luke,
+]{hyperref}
+\newcommand{\itemA}{\raisebox{0.2\fsize}{\scalebox{0.6}{$\bullet$}}\ }
+\begin{document}
+    %----------------------------正式论文封面-------------------------%
+    \includepdfmerge{front.pdf}
+    %-------------------------目录样式(不需修改)------------------------------%
+    \newgeometry{top=2.5cm,bottom=2cm,left=2.5cm,right=2cm}%%页边距
+    \titlecontents{section}[0pt]{\fontsize{14pt}{24pt}\selectfont\simhei}%
+    {\contentslabel{2.5em}}{}%
+    {\titlerule*[0.5pc]{$\cdot$}{\fontsize{12pt}{24pt}\selectfont\simsun\contentspage}\hspace*{0pt}}%
+    \titlecontents{subsection}[20pt]{\fontsize{12pt}{24pt}\selectfont\simsun}%
+    {\contentslabel{2.5em}}{}%
+    {\titlerule*[0.5pc]{$\cdot$}\contentspage\hspace*{0pt}}%
+    \titlecontents{subsubsection}[40pt]{\fontsize{12pt}{24pt}\selectfont\simsun}%
+    {\contentslabel{2.5em}}{}%
+    {\titlerule*[0.5pc]{$\cdot$}\contentspage\hspace*{0pt}}%
+    %-------------------------------------------------------%
+    \begingroup\pagenumbering{Roman}
+    %-------------------------中文摘要------------------------------%
+    \begin{abstract}{南京工业大学本科生毕业论文LuaTex模版}{摘要}{关键词：}{LuaTex\ \ 模版\ \ 模版\ \ 模版}
+        论文摘要是对论文内容高度概括，应该包含研究目的、内容、结果。总字数应在300字左右。\par
+        摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要\par
+    \end{abstract}
+    %-------------------------英文摘要------------------------------%
+    \begin{abstractE}{NJUT Bachelor Thesis Template}{ABSTRACT}{Keywords:\ }{LuaTex;\ Template;\ Template;\ Template}
+        The Hadamard transform is an example of a generalized class of Fourier transforms. It can be regarded as being built out of size-2 discrete Fourier transforms (DFTs), and is in fact equivalent to a multidimensional DFT of size $2\times2\times\cdots\times2\times2$.\par
+    \end{abstractE}
+    %----------------------------目录标题/目录展开级别----------------------------------%
+    \tableofcontents{目录}{3}
+    \endgroup
+%------------------------------正文--------------------------------%
+    \newpage
+    \setcounter{page}{1}
+    \pagenumbering{arabic}
+    \section{绪言$\alpha$}
+    \begin{body}
+        学位论文\cite{thesis1}，论文集\cite{col1}，书籍\cite{book1,book2,book3}，标准\cite{standard1,standard2,standard3,standard4}，期刊\cite{journal1}，互联网\cite{online1}。\par
+    \end{body}
+    \subsection{研究背景}
+    \begin{body}
+        我的研究涉及到这些理论。\par
+    \end{body}
+    \subsection{研究目的}
+    \begin{body}
+        我要研究这个东西。\par
+    \end{body}
+    \subsection{研究内容}
+    \begin{body}
+        我要这么来研究这个东西。\par
+    \end{body}
+    %----------------------------------------
+    \section{原料和实验方法}
+    \begin{body}
+        我用到的东西和我怎么用这些玩意。\par
+    \end{body}
+    \subsection{原料}
+    \begin{body}
+        我要用这些东西。\par
+    \end{body}
+    \subsection{实验方法}
+    \begin{body}
+        我干了这些事情。\par
+    \end{body}
+    \section{结果分析A}
+    \begin{body}
+        我得到了这个结果。\par
+    \end{body}
+    \subsection{本章小结}
+    \begin{body}
+        小结1。\par
+    \end{body}
+    \section{结果分析B}
+    \begin{body}
+        我又得到了这个结果。\par
+    \end{body}
+    \subsection{本章小结}
+    \begin{body}
+        小结2。\par
+    \end{body}
+    \section{结果分析C}
+    \begin{body}
+        我还得到了这个结果。\par
+    \end{body}
+    \subsection{本章小结}
+    \begin{body}
+        小结3。\par
+    \end{body}
+    %----------------------------------------
+    \section{结论与展望}
+    \subsection{结论}
+    \begin{body}
+        我研究出了这些有价值的成果。\par
+    \end{body}
+    \subsection{展望}
+    \begin{body}
+        我未来还要做这些事情。\par
+    \end{body}
+    \begin{bibliography}{参考文献}
+        \bibitem{standard1}{GB/T 50080-2634, 共和国建筑混凝土技术标准[S]. 科洛桑: 银河议会出版社, 2634.}
+        \bibitem{standard2}{RP 2333 (A), 共和国民用飞船建造标准[S]. 科洛桑: 银和议会出版社, 2634.}
+        \bibitem{standard3}{RP 2333 (B), 共和国军用设施建造标准[S]. 科洛桑: 银河议会出版社, 2634.}
+        \bibitem{standard4}{JB 0000, Jedi Lightsaber Technical Standard[S]. Ossus: Great Jedi Library Press, 31653.}
+        \bibitem{空白}{样例文献. 样例文献 ...}
+        \bibitem{empty2}{样例文献. 样例文献 ...}
+        \bibitem{empty3}{样例文献. 样例文献 ...}
+        \bibitem{empty}{这个文章没出现, 这个文章没出现, 这个文章没出现. 文章[J]. ...}
+    \end{bibliography}
+    \begin{acknowledgement}{致谢}
+       这些人对我帮助比较大，我要好好谢谢他们。\sout{比如这个模版}\cite{online1}。\par
+    \end{acknowledgement}
+\end{document}
