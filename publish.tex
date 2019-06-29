@@ -1,0 +1,19 @@
+%--#pragma build_command make publish
+
+
+%-------- convert 'paperback' to 'hardcover' ----------
+% function publish:
+%		@1:	file path
+%		@2:	start page
+%		@3:	end page
+%		@4:	approximate number of text blocks
+%		@5:	centering
+%		@6:	scale to page size (1 keep ratio, 2 not keep)
+\directlua{
+	require("./style/publish.lua")
+	tex.pageheight=math.floor(842.4*65536) 	% your printer's page height
+	tex.pagewidth=math.floor(1188*65536)	% your printer's page width
+	publish("./manual.pdf",2,17,2,1,0)
+	%publish("\string~/FDTH/ComputerScience/ASSEMBLY/Engineering a Compiler.pdf",2,825,20,1,0)
+}
+\end
